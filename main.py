@@ -38,11 +38,13 @@ def main():
     
     # Classify the article
     print("\nAnalyzing article for authenticity...")
-    result = classifier.predict(content)
+    prediction, important_words = classifier.predict(content)
     
     # Display result
     print("\n" + "="*50)
-    print(f"ANALYSIS RESULT: This article appears to be {result} news.")
+    print(f"ANALYSIS RESULT: This article appears to be {prediction} news.")
+    if prediction == "Fake" and important_words:
+        print(f"Top 3 words contributing to 'Fake' classification: {', '.join(important_words)}")
     print("="*50)
     
     # Optional - display a snippet of the content

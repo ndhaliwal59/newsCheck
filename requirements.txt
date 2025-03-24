@@ -1,0 +1,6 @@
+joblib>=1.0.0
+scikit-learn>=1.0.0
+requests>=2.25.0
+beautifulsoup4>=4.9.0
+selenium>=4.0.0
+undetected-chromedriver>=3.0.0

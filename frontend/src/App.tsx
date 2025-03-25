@@ -14,12 +14,15 @@ const App: React.FC = () => {
     setError(undefined);
     
     const response = await analyzeCurrentPage();
+    console.log('Backend Response:', response);
     
     setIsLoading(false);
     
     if (response.success && response.result) {
+      console.log('Updating result state:', response.result); //to debug
       setResult(response.result);
     } else {
+      console.log('Error occurred:', response.error); //to debug
       setError(response.error || 'Failed to analyze article');
     }
   };

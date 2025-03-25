@@ -4,7 +4,7 @@ import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 
 class NewsClassifier:
-    def __init__(self, model_path='models/fake_news_detector.pkl'):
+    def __init__(self, model_path='fake_news_detector.pkl'):
         # Load the model
         saved_data = joblib.load(model_path)
         self.vectorizer = saved_data['vectorizer']

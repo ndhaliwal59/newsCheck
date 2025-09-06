@@ -1,6 +1,6 @@
 import { AnalysisResult } from '../types';
 
-const API_URL = 'https://ndhaliwal.pythonanywhere.com/api';
+const API_URL = 'http://localhost:5001/api';
 
 export const analyzeCurrentPage = async (): Promise<{
   success: boolean;
@@ -40,6 +40,76 @@ export const analyzeCurrentPage = async (): Promise<{
     
   } catch (error) {
     console.error('Error analyzing page:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error occurred' 
+    };
+  }
+};
+
+export const analyzeArticleText = async (articleText: string): Promise<{
+  success: boolean;
+  result?: AnalysisResult;
+  error?: string;
+}> => {
+  try {
+    // Send content to backend for analysis
+    const response = await fetch(`${API_URL}/analyze`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        content: articleText 
+      }),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      return { 
+        success: false, 
+        error: data.error || 'Failed to analyze article' 
+      };
+    }
+    
+    return { success: true, result: data };
+    
+  } catch (error) {
+    console.error('Error analyzing article text:', error);
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : 'Unknown error occurred' 
+    };
+  }
+};
+
+export const analyzeArticleUrl = async (articleUrl: string): Promise<{
+  success: boolean;
+  result?: AnalysisResult;
+  error?: string;
+}> => {
+  try {
+    // Send URL to backend for scraping and analysis
+    const response = await fetch(`${API_URL}/analyze`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        url: articleUrl 
+      }),
+    });
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      return { 
+        success: false, 
+        error: data.error || 'Failed to analyze article from URL' 
+      };
+    }
+    
+    return { success: true, result: data };
+    
+  } catch (error) {
+    console.error('Error analyzing article URL:', error);
     return { 
       success: false, 
       error: error instanceof Error ? error.message : 'Unknown error occurred' 
